@@ -1,4 +1,5 @@
-﻿namespace Lesson1;
+﻿
+namespace Lesson1;
 
 internal class Program
 {
@@ -10,6 +11,7 @@ internal class Program
     {
         Task1 task1 = new Task1();
         task1.Task(args);
+
     }
 
     
@@ -58,5 +60,7 @@ internal class Program
 
             Console.WriteLine("test without args");
         }
+
+        
     }
 }
