@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lesson3.Models;
-internal class Woman
+namespace Lesson3;
+internal enum Gender
 {
+    Male,
+    Female
 }
