@@ -73,7 +73,7 @@ internal class FamilyMember : Person
         Console.WriteLine(Mother.Father is not null ? Mother.Father.ToString() : "None");
     }
 
-    public void printPerson(FamilyMember person)
+    public void printTree(FamilyMember person)
     {
         person.ToString();
 
@@ -81,7 +81,7 @@ internal class FamilyMember : Person
         {
             foreach (FamilyMember child in person.Childs)
             {
-                printPerson(child);
+                printTree(child);
             }
         }
     }
