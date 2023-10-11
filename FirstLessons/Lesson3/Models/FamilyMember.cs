@@ -27,7 +27,7 @@ internal class FamilyMember : Person
         Childs.Remove(child);
     }
 
-    public void printFamily()
+    public void PrintFamily()
     {
         Console.WriteLine(this.ToString());
 
@@ -64,16 +64,22 @@ internal class FamilyMember : Person
             Console.WriteLine("None");
         }
 
-        Console.WriteLine("Grandmothers:");
-        Console.WriteLine(Father.Mother is not null ? Father.Mother.ToString() : "None");
-        Console.WriteLine(Mother.Mother is not null ? Mother.Mother.ToString() : "None");
+        Console.WriteLine("Grandmothers and grandfathers:");
 
-        Console.WriteLine("Grandfathers:");
-        Console.WriteLine(Father.Father is not null ? Father.Father.ToString() : "None");
-        Console.WriteLine(Mother.Father is not null ? Mother.Father.ToString() : "None");
+        if (Father is not null)
+        {
+            Console.WriteLine(Father.Mother is not null ? Father.Mother.ToString() : "None");
+            Console.WriteLine(Father.Father is not null ? Father.Father.ToString() : "None");
+        }
+
+        if (Mother is not null)
+        {
+            Console.WriteLine(Mother.Mother is not null ? Mother.Mother.ToString() : "None");
+            Console.WriteLine(Mother.Father is not null ? Mother.Father.ToString() : "None");
+        }
     }
 
-    public void printTree(FamilyMember person)
+    public void PrintTree(FamilyMember person)
     {
         person.ToString();
 
@@ -81,7 +87,7 @@ internal class FamilyMember : Person
         {
             foreach (FamilyMember child in person.Childs)
             {
-                printTree(child);
+                PrintTree(child);
             }
         }
     }
