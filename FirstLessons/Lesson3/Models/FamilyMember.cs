@@ -112,7 +112,7 @@ internal class FamilyMember : Person, IMarried
 
     private static void PrintPerson(FamilyMember person)
     {
-        string wife = person.Spouse is null ? "" : $" and wife {person.Spouse.ToString()}";
+        string wife = person.Spouse is null ? "" : $" and wife {person.Spouse}";
 
         Console.WriteLine($"{person}{wife}");
 
@@ -122,7 +122,7 @@ internal class FamilyMember : Person, IMarried
 
             foreach (var child in person.Childs)
             {
-                Console.Write($"{child.ToString()} ");
+                Console.Write($"{child} ");
             }
 
         }
