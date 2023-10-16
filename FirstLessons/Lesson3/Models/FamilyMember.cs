@@ -1,10 +1,30 @@
-﻿namespace Lesson3;
+﻿using Lesson3.Models;
+using System;
 
-internal class FamilyMember : Person
+namespace Lesson3;
+
+internal class FamilyMember : Person, IMarried
 {
+    private FamilyMember spouse = null!;
     public FamilyMember Mother { get; set; } = null!;
     public FamilyMember Father { get; set; } = null!;
     public List<FamilyMember> Childs { get; set; }
+    public FamilyMember Spouse
+    {
+        get => spouse;
+        set
+        {
+
+            if (value.Gender == this.Gender)
+            {
+                throw new ArgumentException("Однополые браки не разрешены законодательством и осуждаются обществом.");
+            }
+            else
+            {
+                spouse = value;
+            }
+        }
+    }
 
     public FamilyMember(string name, string lastName, DateTime birthDay, Gender gender) : base(name, lastName, birthDay, gender)
     {
@@ -45,7 +65,7 @@ internal class FamilyMember : Person
             {
                 if (child.Gender == Gender.Male)
                 {
-                    Console.WriteLine(child is null ? "None" : child.ToString());
+                    Console.WriteLine(child.ToString());
                 }
             }
 
@@ -55,7 +75,7 @@ internal class FamilyMember : Person
             {
                 if (child.Gender == Gender.Female)
                 {
-                    Console.WriteLine(child is null ? "None" : child.ToString());
+                    Console.WriteLine(child.ToString());
                 }
             }
         }
@@ -79,16 +99,47 @@ internal class FamilyMember : Person
         }
     }
 
-    public void PrintTree(FamilyMember person)
+    public override string ToString()
     {
-        person.ToString();
+        return $"{Name}";
+    }
+
+    public static void PrintTree(FamilyMember person)
+    {
+        Console.WriteLine($"{person.LastName}`s family tree:");
+        PrintPerson(person);
+    }
+
+    private static void PrintPerson(FamilyMember person)
+    {
+        string wife = person.Spouse is null ? "" : $" and wife {person.Spouse.ToString()}";
+
+        Console.WriteLine($"{person}{wife}");
+
+        if (person.Childs.Count > 0)
+        {
+            Console.Write("Kids: ");
+
+            foreach (var child in person.Childs)
+            {
+                Console.Write($"{child.ToString()} ");
+            }
+
+        }
+
+
+        Console.WriteLine();
 
         if (person.Childs.Count > 0)
         {
             foreach (FamilyMember child in person.Childs)
             {
-                PrintTree(child);
+                if (child.Gender == Gender.Male && child.Childs.Count > 0)
+                {
+                    PrintPerson(child);
+                }
             }
         }
     }
+
 }
