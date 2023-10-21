@@ -101,7 +101,7 @@ internal class Program
 
     public bool HasExsit(int startI, int startJ, int[,] l)
     {
-        if (l[startI,startJ] == 1)
+        if (l[startI, startJ] == 1)
         {
             return false;
         }
@@ -111,7 +111,37 @@ internal class Program
             return true;
         }
 
-        Stack<Tuple<int,int>> stack = new Stack<Tuple<int,int>>();
+        Stack<Tuple<int, int>> stack = new Stack<Tuple<int, int>>();
+
+        while (stack.Count > 0)
+        {
+            var temp = stack.Pop();
+            if (l[temp.Item1, temp.Item2] == 2)
+            {
+                return true;
+            }
+
+            l[temp.Item1, temp.Item2] = 1;
+            if (temp.Item2 - 1 >= 0)
+            {
+                stack.Push(new(temp.Item1, temp.Item2 - 1));
+            }
+            if (temp.Item2 + 1 < l.GetLength(1))
+            {
+                stack.Push(new(temp.Item1, temp.Item2 + 1));
+            }
+            if (temp.Item1 - 1 >= 0)
+            {
+                stack.Push(new(temp.Item1 - 1, temp.Item2));
+            }
+            if (temp.Item2 + 1 < l.GetLength(0))
+            {
+                stack.Push(new(temp.Item1 + 1, temp.Item2));
+            }
+
+        }
+
+
     }
 
     private static int[,] TurnLeft(int[,] array)
