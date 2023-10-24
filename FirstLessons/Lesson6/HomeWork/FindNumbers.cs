@@ -58,7 +58,7 @@ internal class FindNumbers
 
                     if (numbersList[i] + numbersList[j] + numbersList[k] == target)
                     {
-                        Console.WriteLine("Number of iterations = " + iter);
+                        Console.WriteLine("Количество итераций = " + iter);
                         return (numbersList[i], numbersList[j], numbersList[k]);
                     }
                 }
@@ -83,7 +83,7 @@ internal class FindNumbers
 
                 if (set.Contains(firstNum))
                 {
-                    Console.WriteLine("Number of iterations = " + iter);
+                    Console.WriteLine("Количество итераций = " + iter);
                     return (firstNum, numbersList[i], numbersList[i]);
                 }
                 else
@@ -98,40 +98,33 @@ internal class FindNumbers
         return (0, 0, 0);
     }
 
-    public static (int firstNumber, int secondNumber, int thirdNumber) FindThreeNumbersFromChatGPT(List<int> arr, int targetSum)
+    public static (int firstNumber, int secondNumber, int thirdNumber) FindThreeNumbersWhileLoopWithTwoSholders(List<int> numbersList, int target)
     {
         int iter = 0;
-        // Сортируем массив
-        arr.Sort();
+        numbersList.Sort();
 
-        // Перебираем первое число
-        for (int i = 0; i < arr.Count - 2; i++)
+        for (int i = 0; i < numbersList.Count - 2; i++)
         {
-            // Инициализируем указатели для второго и третьего чисел
-            int left = i + 1;
-            int right = arr.Count - 1;
+            int leftSholder = i + 1;
+            int rightSholder = numbersList.Count - 1;
 
-            while (left < right)
+            while (leftSholder < rightSholder)
             {
                 iter++;
-                int currentSum = arr[i] + arr[left] + arr[right];
+                int current = numbersList[i] + numbersList[leftSholder] + numbersList[rightSholder];
 
-                if (currentSum == targetSum)
+                switch (true)
                 {
-                    // Найдены три числа сумма которых равна заданному числу
-                    Console.WriteLine("Number of iterations = " + iter);
-                    return (arr[i], arr[left], arr[right]);
-
-                }
-                else if (currentSum < targetSum)
-                {
-                    // Увеличиваем сумму, двигая указатель left вправо
-                    left++;
-                }
-                else
-                {
-                    // Уменьшаем сумму, двигая указатель right влево
-                    right--;
+                    case true when current == target:
+                        Console.WriteLine("Количество итераций = " + iter);
+                        return (numbersList[i], numbersList[leftSholder], numbersList[rightSholder]);
+                    case true when current < target:
+                        leftSholder++;
+                        break;
+                    case true when current > target:
+                        rightSholder--;
+                        break;
+                    default: break;
                 }
             }
         }
