@@ -2,13 +2,18 @@
 
 internal class Program
 {
+    protected Program()
+    {
+
+    }
+
     static void Main(string[] args)
     {
         FamilyMember fother = new FamilyMember("John", "Silva", DateTime.Now, Gender.Male);
         FamilyMember mother = new FamilyMember("Jamm", "Silva", DateTime.Now, Gender.Female);
         fother.Spouse = mother;
         mother.Spouse = fother;
-        FamilyMember children = new FamilyMember("Suzi", "Silva", DateTime.Now, Gender.Female); 
+        FamilyMember children = new FamilyMember("Suzi", "Silva", DateTime.Now, Gender.Female);
         children.Father = fother;
         children.Mother = mother;
         fother.AddChild(children);
@@ -49,8 +54,4 @@ internal class Program
         Console.ReadKey(true);
 
     }
-    //Спроектируйте программу для построения генеалогического дерева.
-    //Учтите что у нас есть члены семьи у кого нет детей(дет).
-    //Есть члены семьи у кого дети есть (взрослые).
-    //Есть мужчины и женщины.
 }
