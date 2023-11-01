@@ -1,5 +1,4 @@
-﻿
-namespace Lesson7;
+﻿namespace Lesson7;
 internal interface ICalc
 {
     public double Result { get; }

@@ -1,32 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lesson7;
+﻿namespace Lesson7;
 internal class CalcApp
 {
-    private ICalc _calc;
+    private ICalc? _calc;
     private const string FIRST_NUMBER_MSG = "first";
     private const string SECOND_NUMBER_MSG = "second";
-    private double? firstNumber;
-    private double secondNumber;
+    private double? _firstNumber;
+    private double _secondNumber;
+    private readonly List<ConsoleKey> _supportedConsoleKeys = null!;
     public CalcApp()
     {
+        _supportedConsoleKeys = new List<ConsoleKey>()
+        {
+            ConsoleKey.Add,
+            ConsoleKey.OemPlus,
+            ConsoleKey.Subtract,
+            ConsoleKey.OemMinus,
+            ConsoleKey.Divide,
+            ConsoleKey.Multiply,
+            ConsoleKey.Escape,
+            ConsoleKey.Backspace,
+            ConsoleKey.Spacebar
+        };
     }
 
     internal void RunApp()
     {
-        firstNumber = InputNumber(FIRST_NUMBER_MSG);
-        _calc = new Calc(firstNumber);
+        _firstNumber = InputNumber(FIRST_NUMBER_MSG);
+        _calc = new Calc(_firstNumber);
         bool run = true;
-        _calc.CalcAdvancedEventHandler += _calc_CalcAdvancedEventHandler;
+        _calc.CalcAdvancedEventHandler += Calc_CalcAdvancedEventHandler;
 
         while (run)
         {
             ConsoleKey operation = RequestToOperation();
 
+#pragma warning disable S2589
             switch (true)
             {
                 case true when (operation == ConsoleKey.Add || operation == ConsoleKey.OemPlus):
@@ -51,17 +59,17 @@ internal class CalcApp
                     run = CalculateNums(null, null, ErrorMessage);
                     break;
             }
-
+#pragma warning restore S2589
         }
     }
 
-    private void _calc_CalcAdvancedEventHandler(object? sender, string e)
+    private void Calc_CalcAdvancedEventHandler(object? sender, string e)
     {
         if (sender is Calc)
         {
             double? temp = (sender as Calc)?.Result;
-            Console.WriteLine($"{firstNumber} {e} {secondNumber} = {temp}");
-            firstNumber = temp;
+            Console.WriteLine($"{_firstNumber} {e} {_secondNumber} = {temp}");
+            _firstNumber = temp;
         }
     }
 
@@ -69,10 +77,10 @@ internal class CalcApp
     {
         if (action is not null)
         {
-            secondNumber = InputNumber(SECOND_NUMBER_MSG);
+            _secondNumber = InputNumber(SECOND_NUMBER_MSG);
         }
 
-        action?.Invoke(secondNumber);
+        action?.Invoke(_secondNumber);
         simpleAction?.Invoke();
         bool? isFunc = func?.Invoke();
         return isFunc ?? true;
@@ -113,19 +121,7 @@ internal class CalcApp
         Console.WriteLine("To exit push ESC or Spacebar.");
         ConsoleKey operation = Console.ReadKey(true).Key;
 
-        bool isSupportedKey = (
-            operation == ConsoleKey.Add ||
-            operation == ConsoleKey.OemPlus ||
-            operation == ConsoleKey.Subtract ||
-            operation == ConsoleKey.OemMinus ||
-            operation == ConsoleKey.Divide ||
-            operation == ConsoleKey.Multiply ||
-            operation == ConsoleKey.Escape ||
-            operation == ConsoleKey.Backspace ||
-            operation == ConsoleKey.Spacebar
-            );
-
-        if (isSupportedKey)
+        if (_supportedConsoleKeys.Contains(operation))
         {
             return operation;
         }
@@ -135,7 +131,7 @@ internal class CalcApp
         }
     }
 
-    private double InputNumber(string message)
+    private static double InputNumber(string message)
     {
         Console.WriteLine($"Input {message} number and press enter:");
         Console.Write(">");
