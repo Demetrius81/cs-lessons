@@ -9,4 +9,5 @@ internal interface ICalc
     void Mult(double x);
     void CancelLast();
     event EventHandler<EventArgs> CalcEventHandler;
+    event EventHandler<string> CalcAdvancedEventHandler;
 }

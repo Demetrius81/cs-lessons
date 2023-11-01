@@ -7,23 +7,26 @@ using System.Threading.Tasks;
 namespace Lesson7;
 internal class Calc : ICalc
 {
-    private Stack<double> _lastStack;
+    private readonly Stack<double> _lastStack;
 
-    internal Calc()
-    {
-        Result = 0;
-        _lastStack = new Stack<double>();
-    }
+    public event EventHandler<EventArgs> CalcEventHandler = null!;
+    public event EventHandler<string> CalcAdvancedEventHandler = null!;
 
-    public event EventHandler<EventArgs> CalcEventHandler;
 
     public double Result { get; private set; }
+
+    internal Calc(double? result = 0)
+    {
+        Result = result ?? 0;
+        _lastStack = new Stack<double>();
+    }
 
     public void Sum(double x)
     {
         _lastStack.Push(Result);
         Result += x;
         PrintResult();
+        PrintResult("+");
     }
 
     public void Sub(double x)
@@ -31,6 +34,7 @@ internal class Calc : ICalc
         _lastStack.Push(Result);
         Result -= x;
         PrintResult();
+        PrintResult("-");
     }
 
     public void Div(double x)
@@ -43,6 +47,7 @@ internal class Calc : ICalc
         _lastStack.Push(Result);
         Result /= x;
         PrintResult();
+        PrintResult("/");
     }
 
     public void Mult(double x)
@@ -50,6 +55,7 @@ internal class Calc : ICalc
         _lastStack.Push(Result);
         Result *= x;
         PrintResult();
+        PrintResult("*");
     }
 
     public void CancelLast()
@@ -58,7 +64,13 @@ internal class Calc : ICalc
         {
             Result = x;
             PrintResult();
+            PrintResult("Cancel last operation");
         }
+    }
+
+    private void PrintResult(string operation)
+    {
+        CalcAdvancedEventHandler?.Invoke(this, operation);
     }
 
     private void PrintResult()

@@ -4,7 +4,14 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Tasks task = new();
-        task.Task4();
+        //ConsoleKeyInfo item = Console.ReadKey(true);
+        //Console.WriteLine(item.Key);
+        //Console.ReadKey(true);
+
+        //Tasks tasks = new Tasks();
+        //tasks.Task2();
+
+        CalcApp calcApp = new CalcApp();
+        calcApp.RunApp();
     }
 }
