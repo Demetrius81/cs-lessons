@@ -11,7 +11,7 @@ internal class Program
         //Tasks tasks = new Tasks();
         //tasks.Task2();
 
-        CalcApp calcApp = new();
+        ChainOfResp.CalcApp calcApp = new();
         calcApp.RunApp();
     }
 }
