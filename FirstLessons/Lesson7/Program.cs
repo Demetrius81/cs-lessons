@@ -1,17 +1,19 @@
-﻿namespace Lesson7;
+﻿using Lesson7.ChainOfResp;
+
+namespace Lesson7;
 
 internal class Program
 {
+    protected Program()
+    {
+        
+    }
     static void Main(string[] args)
     {
-        //ConsoleKeyInfo item = Console.ReadKey(true);
-        //Console.WriteLine(item.Key);
-        //Console.ReadKey(true);
-
-        //Tasks tasks = new Tasks();
-        //tasks.Task2();
-
-        ChainOfResp.CalcApp calcApp = new();
+        CalcAppBase calcApp = new CalcAppChainOfResp();
         calcApp.RunApp();
+
+        //CalcAppBase calcApp = new CalcApp();
+        //calcApp.RunApp();
     }
 }

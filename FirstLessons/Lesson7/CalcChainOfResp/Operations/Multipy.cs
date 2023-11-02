@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lesson7.CalcChainOfResp.Operations;
+﻿namespace Lesson7.CalcChainOfResp.Operations;
 internal class Multipy : Operation
 {
-    public Multipy(Operation operation) : base(operation)
+    public Multipy(
+        Operation operation,
+        ICalc calc,
+        Func<Action<double>?, Action?, Func<bool>?, bool> func,
+        Func<bool> quit,
+        Func<bool> error
+        ) : base(operation, calc, func, quit, error)
     {
     }
 
-    public override void Execute(ConsoleKey operation, ICalc calc, double x)
+    public override bool? Execute(ConsoleKey operation)
     {
         if (operation == ConsoleKey.Multiply)
         {
-            calc.Mult(x);
+            return Function.Invoke(Calc.Mult, null, null);
         }
         else
         {
-            NextInstance?.Execute(operation, calc, x);
+            return NextInstance?.Execute(operation);
         }
     }
 }

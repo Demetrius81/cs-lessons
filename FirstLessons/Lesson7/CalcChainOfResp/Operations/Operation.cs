@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lesson7.CalcChainOfResp.Operations;
+﻿namespace Lesson7.CalcChainOfResp.Operations;
 internal abstract class Operation
 {
-    internal Operation NextInstance { get; private set; }
+    internal Operation? NextInstance { get; init; }
+    internal Func<Action<double>?, Action?, Func<bool>?, bool> Function { get; init; }
+    internal ICalc Calc { get; init; }
+    internal Func<bool> Quit { get; init; }
+    internal Func<bool> Error { get; init; }
 
-    public Operation(Operation operation)
+    protected Operation(Operation? operation,
+                    ICalc calc,
+                    Func<Action<double>?, Action?, Func<bool>?, bool> func,
+                    Func<bool> quit,
+                    Func<bool> error)
     {
         NextInstance = operation;
+        Function = func;
+        Quit = quit;
+        Error = error;
+        Calc = calc;
     }
 
-    public abstract void Execute(ConsoleKey operation, ICalc calc, double x);
+    public abstract bool? Execute(ConsoleKey operation);
 }

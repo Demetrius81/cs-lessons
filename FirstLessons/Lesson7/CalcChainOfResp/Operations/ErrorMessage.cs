@@ -1,25 +1,25 @@
 ﻿namespace Lesson7.CalcChainOfResp.Operations;
-internal class Divide : Operation
+internal class ErrorMessage : Operation
 {
-    public Divide(
-        Operation operation,
+    public ErrorMessage(Operation operation,
         ICalc calc,
         Func<Action<double>?, Action?, Func<bool>?, bool> func,
         Func<bool> quit,
-        Func<bool> error
-        ) : base(operation, calc, func, quit, error)
+        Func<bool> error)
+        : base(operation, calc, func, quit, error)
     {
     }
 
     public override bool? Execute(ConsoleKey operation)
     {
-        if (operation == ConsoleKey.Divide)
+        if (operation != ConsoleKey.F24)
         {
-            return Function.Invoke(Calc.Div, null, null);
+            return Function.Invoke(null, null, Error);
         }
         else
         {
             return NextInstance?.Execute(operation);
         }
+
     }
 }
