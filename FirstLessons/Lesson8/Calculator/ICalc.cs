@@ -7,6 +7,12 @@ internal interface ICalc
     void Div(double x);
     void Mult(double x);
     void CancelLast();
+
+    void Sum(int x);
+    void Sub(int x);
+    void Div(int x);
+    void Mult(int x);
+
     event EventHandler<EventArgs> CalcEventHandler;
     event EventHandler<string> CalcAdvancedEventHandler;
 }

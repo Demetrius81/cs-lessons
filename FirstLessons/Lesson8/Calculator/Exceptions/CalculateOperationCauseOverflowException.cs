@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lesson8.CalcChainOfResp.Exceptions;
+namespace Lesson8;
 internal class CalculateOperationCauseOverflowException : CalculatorException
 {
     public CalculateOperationCauseOverflowException() : base() { }

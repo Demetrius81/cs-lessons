@@ -1,7 +1,5 @@
-﻿using Lesson8.CalcChainOfResp.Exceptions;
-
-namespace Lesson8;
-internal sealed class Calc : ICalc
+﻿namespace Lesson8;
+internal class Calc : ICalc
 {
     private readonly Stack<double> _lastStack;
 
@@ -37,7 +35,7 @@ internal sealed class Calc : ICalc
     {
         if (x == 0)
         {
-            throw new CalculatorDivideByZeroException("Divide by zero");
+            throw new ArithmeticException("Divide by zero");
         }
 
         _lastStack.Push(Result);
@@ -47,6 +45,47 @@ internal sealed class Calc : ICalc
     }
 
     public void Mult(double x)
+    {
+        _lastStack.Push(Result);
+        Result *= x;
+        PrintResult();
+        PrintResult("*");
+    }
+
+    public void Sum(int x)
+    {
+        _lastStack.Push(Result);
+        Result += x;
+        PrintResult();
+        PrintResult("+");
+    }
+
+    public void Sub(int x)
+    {
+        _lastStack.Push(Result);
+        Result -= x;
+        if (Result < 0)
+        {
+            throw new CalculatorResultIsLessThanZeroException("Result can not be less than zero.");
+        }
+        PrintResult();
+        PrintResult("-");
+    }
+
+    public void Div(int x)
+    {
+        if (x == 0)
+        {
+            throw new CalculatorDivideByZeroException("Divide by zero");
+        }
+
+        _lastStack.Push(Result);
+        Result = (int)Math.Round(Result) / x;
+        PrintResult();
+        PrintResult("/");
+    }
+
+    public void Mult(int x)
     {
         _lastStack.Push(Result);
         Result *= x;

@@ -1,6 +1,4 @@
-﻿using Lesson8;
-
-namespace Lesson8;
+﻿namespace Lesson8;
 
 internal abstract class CalcAppBase
 {
@@ -34,14 +32,39 @@ internal abstract class CalcAppBase
         Console.WriteLine($"Input {message} number and press enter:");
         Console.Write(">");
 
-        if (double.TryParse(Console.ReadLine(), out double result))
+        if (DoubleTryPars(Console.ReadLine(), out double result) && result >= 0)
         {
             return result;
         }
         else
         {
-            throw new InvalidCastException("You enter not a number");
+            throw new CalculatorWrongArgumentException("You enter wrong argument");
         }
+    }
+
+    protected static bool DoubleTryPars(string value, out double result)
+    {
+        double parced = default;
+        bool isCorrect = false;
+        try
+        {
+            parced = Convert.ToDouble(value);
+            isCorrect = true;
+        }
+        catch (FormatException ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        catch (OverflowException ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            result = parced;
+        }
+
+        return isCorrect;
     }
 
     protected bool CalculateNums(Action<double>? action, Action? simpleAction, Func<bool>? func)

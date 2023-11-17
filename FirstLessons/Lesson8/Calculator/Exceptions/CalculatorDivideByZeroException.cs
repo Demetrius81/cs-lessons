@@ -1,4 +1,4 @@
-﻿namespace Lesson8.CalcChainOfResp.Exceptions;
+﻿namespace Lesson8;
 internal class CalculatorDivideByZeroException : CalculatorException
 {
     public CalculatorDivideByZeroException() : base() { }
