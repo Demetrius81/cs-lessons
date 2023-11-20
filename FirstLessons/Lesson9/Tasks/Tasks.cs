@@ -7,7 +7,7 @@ namespace Lesson9;
 internal class Tasks
 {
 
-    static void Main(string[] args)
+    static void Run(string[] args)
     {
 
         //создать методы создающий этот класс вызывая один из его 
@@ -85,7 +85,7 @@ internal class Tasks
 
 }
 
-internal class TestClass
+internal class TestClass2
 {
 [InvokeAfterCreation]
     public int I { get; set; }
@@ -95,15 +95,15 @@ internal class TestClass
     public char[]? C { get; set; }
     private char[]? CC { get; set; }
 
-    public TestClass()
+    public TestClass2()
     {
 
     }
-    public TestClass(int i)
+    public TestClass2(int i)
     {
         I = i;
     }
-    public TestClass(int i, int ii, string s, decimal d, char[] c, char[] cc) : this(i)
+    public TestClass2(int i, int ii, string s, decimal d, char[] c, char[] cc) : this(i)
     {
         S = s;
         D = d;
@@ -120,3 +120,4 @@ public class InvokeAfterCreationAttribute : Attribute
 {
 
 }
+
